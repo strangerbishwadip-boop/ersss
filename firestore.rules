@@ -1,0 +1,53 @@
+// ─────────────────────────────────────────
+// NISERS — Firestore Security Rules
+// ─────────────────────────────────────────
+// Copy this to Firebase Console → Firestore → Rules
+// For hackathon demo, use permissive rules.
+// For production, tighten per-role access.
+// ─────────────────────────────────────────
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users — anyone can read, only auth can write
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true;  // Tighten in production
+    }
+    
+    // Emergency requests — real-time access for all roles
+    match /ambulanceRequests/{docId} {
+      allow read, write: if true;
+    }
+    
+    match /fireRequests/{docId} {
+      allow read, write: if true;
+    }
+    
+    // Complaints
+    match /complaints/{docId} {
+      allow read, write: if true;
+    }
+    
+    // Community Alerts
+    match /communityAlerts/{docId} {
+      allow read, write: if true;
+    }
+    
+    // Blood Requests
+    match /bloodRequests/{docId} {
+      allow read, write: if true;
+    }
+    
+    // UAV Missions
+    match /uavMissions/{docId} {
+      allow read, write: if true;
+    }
+    
+    // Live Locations — high-frequency GPS updates
+    match /liveLocations/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
